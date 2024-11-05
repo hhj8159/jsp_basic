@@ -58,7 +58,7 @@ public class MemberDao {
 //		int result = dao.insert((Member.builder().id("cccc").pw("1234").name("소똥이").build()));
 //		System.out.println(result);
 		
-		Member m = dao.selectOne("abab");
+		Member m = dao.selectOne("star");
 		System.out.println(m);
 		
 	}
