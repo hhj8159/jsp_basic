@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import org.mariadb.jdbc.Driver;
 
@@ -60,7 +61,7 @@ public class MemberDao {
 		
 		Member m = dao.selectOne("star");
 		System.out.println(m);
-		
+
 	}
 
 	// 싱글톤 인스턴스메서드 하나를 재활용
