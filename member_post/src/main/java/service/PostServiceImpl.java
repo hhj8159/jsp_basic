@@ -37,8 +37,14 @@ public class PostServiceImpl implements PostService{
 		// TODO Auto-generated method stub
 		return dao.selectList();
 	}
-	
 
+	@Override
+	public Post view(Long pno) {
+		dao.increaseViewCount(pno);
+		return findBy(pno);
+	}
+	
+	
 	
 	
 }
