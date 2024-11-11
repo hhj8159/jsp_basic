@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import dao.PostDao;
+import dto.Criteria;
 import vo.Post;
 
 public class PostServiceImpl implements PostService{
@@ -33,9 +34,15 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<Post> list() {
+	public List<Post> list(Criteria cri) {
 		// TODO Auto-generated method stub
-		return dao.selectList();
+		return dao.selectList(cri);
+	}
+	
+	@Override
+	public int count(Criteria cri) {
+		// TODO Auto-generated method stub
+		return dao.getCount(cri);
 	}
 
 	@Override
