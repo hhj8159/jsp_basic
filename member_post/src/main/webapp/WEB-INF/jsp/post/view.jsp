@@ -28,7 +28,17 @@
 
                 <label for="updatedate" class="form-label mt-3"><i class="fa-regular fa-calendar-plus text-danger"></i> <b>Updated Date</b></label>
                 <input type="text" class="form-control" id="updatedate" placeholder="updatedate" name="updatedate" value="${post.updatedate}" disabled>
-
+				
+				<label class="form-label mt-3"><i class="fa-solid fa-paperclip text-danger" ></i><b>Attach</b></label><br>
+                <ul class="list-group attach-result">
+               		<c:if test="${empty post.attachs}"> 	
+			    	<li class="list-group-item">첨부파일이 없습니다</li>
+               		</c:if>
+            		<c:forEach items="${post.attachs}" var="a">
+					<li class="list-group-item"><a href="${cp}download?uuid=${a.uuid}&origin=${a.origin}&path=${a.path}">${a.origin}</a></li>
+					</c:forEach>
+				</ul>
+			
                 <div class="text-center my-5">
                 	<c:if test="${post.writer == member.id}">
                     <a href="modify?pno=${post.pno}&${cri.qs2}" class="btn btn-warning">수정</a>
