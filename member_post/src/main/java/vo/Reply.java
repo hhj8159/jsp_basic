@@ -3,11 +3,12 @@ package vo;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reply {
 	private Long rno;
 	private String content;
@@ -18,17 +19,6 @@ public class Reply {
 	private String writer;
 	private Long pno;
 	
-//	Li
-//	
-//	public Reply(Long rno, String content, Date regdate, Date updatedate, int hidden, int likes, String writer, Long pno) {
-//		this.rno = rno;
-//		this.content = content;
-//		this.regdate = regdate;
-//		this.updatedate = updatedate;
-//		this.hidden = hidden;
-//		this.likes = likes;
-//		this.writer = writer;
-//		this.pno = pno;
-//	}
+
 	
 }
