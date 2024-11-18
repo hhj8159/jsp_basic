@@ -4,27 +4,52 @@ const replyService = (function() {
 
     function write(reply, callback) {
         console.log(reply);
-		if(callback)
-			callback();
+        const data = JSON.stringify(reply);
+        $.post({
+            url,
+            data,
+        })
+        .done(function(data) {
+			if(callback)
+				callback(data);
+            
+        })
     }
     function list(pno, callback) {
-        $.getJSON(url + "/list/" + pno).done(function(data) {
-            if(callback)
+		$.getJSON(url + "/list/" + pno).done(function(data) {
+			if(callback)
 			callback(data);
-        });
+	
+		})
         
-        
-        // 위와 동일코드
-        // $.ajax({
-        //     url : rul + "/list/" + pno,
-        //     method : 'GET',
-        //     dataType : 'JSON',
-        //     success : function(data) {
-        //         console.log(data);
-                
-        //     }
-        // });
-
     }
-    return {write, list}
+    function view(rno, callback) {
+		$.getJSON(url + "/" + rno).done(function(data) {
+			if(callback)
+			callback(data);
+	
+		})
+        
+    }
+	function modify(reply, callback) {
+        const data = JSON.stringify(reply);
+		$.ajax(url, {
+			method : 'put',
+			data
+		}).done(function(data) {
+			if(callback)
+			callback(data);						
+		})
+	}
+	function remove(rno, callback) {
+		//console.log
+		$.ajax(url + "/" + rno, {
+			method : 'delete'
+		}).done(function(data) {
+			if(callback)
+			callback(data);
+				
+		})
+	}
+    return {write, list, view, modify, remove}
 })();

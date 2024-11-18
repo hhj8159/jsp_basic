@@ -65,10 +65,7 @@ public class ReplyController extends HttpServlet{
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		char[] chs = new char[req.getContentLength()];
-		req.getReader().read(chs);
-		String str = new String(chs);
-		Reply reply = gson.fromJson(str, Reply.class);
+		Reply reply = gson.fromJson(req.getReader(), Reply.class);
 		
 		service.modify(reply);
 		
@@ -79,17 +76,17 @@ public class ReplyController extends HttpServlet{
 		String uri = req.getRequestURI();
 		uri = uri.replace(req.getContextPath() + "/reply/", "");
 		
-		if(uri.startsWith("list")) {// 목록조회
+		if(uri.startsWith("list")) {// 목록삭제
 			int tmpIdx = uri.lastIndexOf("/");
 			Long pno = 0L;
 			if(tmpIdx != -1) {
-				pno = Long.valueOf(uri.substring(tmpIdx + 1)); 
+				pno = Long.valueOf(uri.substring(tmpIdx + 1));
 			}
 			service.removeAll(pno);
 		}
-		else { // 단일조회
-			Long rno = Long.valueOf(uri); 
-			service.findBy(rno);			
+		else { // 단일삭제
+			Long rno = Long.valueOf(uri);
+			service.remove(rno);
 		}
 	}
 	
