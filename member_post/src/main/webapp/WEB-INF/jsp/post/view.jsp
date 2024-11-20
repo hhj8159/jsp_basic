@@ -84,7 +84,7 @@
             const pno = '${post.pno}';
 
             // 목록 조회
-            function list(cri) {
+            function list(cri, myOnly) {
             	replyService.list(pno, cri, function(data) {
             		if(!data.list.length) {
             			$(".btn-more-reply")
@@ -94,22 +94,27 @@
             			.addClass("btn-secondary");
             			return;
             		}
-                    let str = "";
                     let myStr = "";
-                    for(let i in data.list) {
-                        str += makeLi(data.list[i])
-                    }                
                     for(let i in data.myList) {
                         myStr += makeLi(data.myList[i])
                     }                
-                    $(".replies").append(str);                
                     $(".my-replies").html(myStr);                
+
                     // 추가 css작업
                     $(".my-replies .text-secondary, .my-replies .text-black").removeClass("text-secondary text-black")
                     
+                    if(myOnly != null) {
+                    	return false;
+                    }
+                    let str = "";
+                    for(let i in data.list) {
+                        str += makeLi(data.list[i])
+                    }                
+                    $(".replies").append(str);                
+                    
                 });    			
 			}
-            list();
+            list();            
             
             // 단일 리스트 문자열 생성
             function makeLi(reply) {
@@ -136,6 +141,7 @@
 					console.log(data);
 				})
 			});
+            
             // li .btn-reply-remove 클릭시 이벤트
 			$(".replies, .my-replies").on("click", "li .btn-reply-remove", function () {
 				if(! confirm("삭제 하시겠습니까?")) {
@@ -146,9 +152,11 @@
 				replyService.remove(rno, function(data) {
 					alert("삭제되었습니다");
 					$li.remove();
+					list(undefined, true);
 				});
 				return false;
 			});
+			
             
             // 댓글 쓰기 버튼 클릭시
 			$("#btnWriteReply").click(function() {
@@ -158,7 +166,9 @@
 				$("#replyModal").modal("show");
 				$("#replyContent").val("");
 				$("#replyWriter").val("${member.id}");
+				list(undefined, true);
 			})
+			
 			
 			// 댓글 더보기 버튼 클릭시
 			$(".btn-more-reply").click(function () {
@@ -175,8 +185,10 @@
             		replyService.write(reply, function(data) {
             			$("#replyModal").modal("hide");
             			list();
+            			list(undefined, true);
 					});
-				});
+				}); 
+            	
             	// 댓글 수정(반영) 버튼 클릭시
             	$("#btnReplyModifySubmit").click(function() {
             		const content = $("#replyContent").val();
@@ -185,8 +197,10 @@
             		replyService.modify(reply, function(data) {
             			$("#replyModal").modal("hide");
             			$(`.replies li[data-rno='\${rno}'] p`).text(content);
+            			list(undefined, true);
 					});
 				});
+            	
             	// 댓글 삭제(반영) 버튼 클릭시
             	$("#btnReplyRemoveSubmit").click(function() {
             		const rno = $("#replyModal").data("rno");

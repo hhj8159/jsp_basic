@@ -67,6 +67,11 @@ public class Criteria {
 		}).collect(Collectors.toList()).toArray(strs);
 		return String.join("&", strs);
 	}
+	
+	public String[] getTypeArr() {
+		return type.split("");
+	}
+	
 }
 		
 			
